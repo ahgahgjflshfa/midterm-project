@@ -1,38 +1,39 @@
-/*
-    Title: First Version Multiplier
-    Input port:
-        1. clk: clock
-        2.
-*/
-module Multiplier(clk, ctl, a, b, product);
-    input clk;
-    input [5:0] ctl;
-    input [31:0] a, b;
-    output [31:0] product;
+`timescale 1ns/1ns
+module Multiplier( clk, dataA, dataB, Signal, dataOut, reset );
+    input clk ;
+    input reset ;
+    input [31:0] dataA ;
+    input [31:0] dataB ;
+    input [5:0] Signal ;
+    output [63:0] dataOut ;
 
-    wire carry;
-    reg [63:0] temp, multiplicand, multiplier;
-    reg rst, en_reg;
+    //   Signal ( 6-bits)?
+    //   MULTU  : 25
 
-    parameter MULTU = 6'd25;
+    reg [63:0] temp, multiplicand, multiplier, ken;
+    parameter MULTU= 6'd25;
+    parameter OUT = 6'b111111;
 
-    ALU alu0(.ctl(ctl), .a(temp[31:0]), .b(multiplicand[31:0]), .cin(0), .carry(carry), .result(temp[31:0]));
-    ALU alu1(.ctl(ctl), .a(temp[63:32]), .b(multiplicand[63:32]), .cin(carry), .result(temp[63:32]));
+    ALU alu0(.ctl(Signal), .a(ken[31:0]), .b(multiplicand[31:0]), .cin(0), .carry(carry), .result(ken[31:0]));
+    ALU alu1(.ctl(Signal), .a(ken[63:0]), .b(multiplicand[31:0]), .cin(carry), .result(ken[63:32]));
 
-    Register_64bit Product(.d_out(product), .clk(clk), .rst(rst), .en_reg(en_reg), .d_in(temp));
-
-    // control
-    always @(posedge clk) begin
-        if (ctl == MULTU) begin
-            temp = product;
-
-            if (multiplier[0] == 1'b1)
-                en_reg = 1; // 寫入 register
-            else
-                en_reg = 0;
-
-            multiplicand = multiplicand << 1;   // shift left 
-            multiplier = multiplier >> 1;       // shift right
+    always @( posedge clk or reset ) begin
+        if ( reset ) begin
+                temp = 32'b0;
+                multiplicand = dataA;
+                multiplier = dataB;
+        end
+        else begin
+            case ( Signal )
+                MULTU: begin
+                    multiplicand = multiplicand << 1;
+                    multiplier = multiplier >> 1;
+                end
+                OUT: temp = ken;
+            endcase
         end
     end
+
+    assign dataOut = temp ;
+
 endmodule

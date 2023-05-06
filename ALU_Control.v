@@ -1,29 +1,57 @@
-/*
-	Title:	ALU Control Unit
-	Input Port
-		1. clk: clock
-		2. signal_in: 傳進來的控制訊號
-	Output Port
-		1. signal_out: 傳出去的控制信號
-*/
+`timescale 1ns/1ns
+module ALUControl( clk, Signal, SignaltoALU, SignaltoSHT, SignaltoMUL, SignaltoMUX );
+    input clk ;
+    input [5:0] Signal ;
+    output [5:0] SignaltoALU ;
+    output [5:0] SignaltoSHT ;
+    output [5:0] SignaltoMUL ;
+    output [5:0] SignaltoMUX ;
 
-module alu_ctl(clk, signal_in, ctl);
-    input clk;
-    input [5:0] signal_in;
-    output reg [5:0] ctl;
+    //   Signal ( 6-bits)?
+    //   AND  : 36
+    //   OR   : 37
+    //   ADD  : 32
+    //   SUB  : 34
+    //   SRL  : 2
+    //   SLT  : 42
+    //   MULTU : 25
 
-    reg [6:0] count;
 
-    parameter AND = 6'd36;
-    parameter OR = 6'd37;
-    parameter ADD = 6'd32;
-    parameter SUB = 6'd34;
-    parameter SLT = 6'd42;
-    parameter SRL = 6'd02;
+    reg [5:0] temp ;
+    reg [6:0] counter ;
+
+
+    parameter AND = 6'b100100;
+    parameter OR  = 6'b100101;
+    parameter ADD = 6'b100000;
+    parameter SUB = 6'b100010;
+    parameter SLT = 6'b101010;
+
+    parameter SRL = 6'b000010;
+
+    parameter MFHI = 6'b010000;
+    parameter MFLO = 6'b010010;
     parameter MULTU = 6'd25;
 
-    always @(posedge clk) begin
-        
-    end
-endmodule
+    always @( posedge clk ) begin
+        temp = Signal ;
 
+        if ( Signal == MULTU ) begin
+            counter = counter + 1 ;
+
+            if ( counter == 32 ) begin
+                temp = 6'b111111 ;
+                counter = 0 ;
+            end
+        end
+        else
+            counter = 0 ;
+    end
+
+    assign SignaltoALU = temp ;
+    assign SignaltoSHT = temp ;
+    assign SignaltoMUL = temp ;
+    assign SignaltoMUX = temp ;
+
+
+endmodule
