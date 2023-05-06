@@ -8,7 +8,8 @@
 		1. result: 最後處理完的結果
 		2. zero:   branch指令所需要之輸出
 */
-module Alu(ctl, a, b, result);
+module Alu(ctl, a, b, cin, carry, result);
+    input cin;
     input [5:0] ctl;
     input [31:0] a, b;
     output wire [31:0] result;
@@ -21,7 +22,7 @@ module Alu(ctl, a, b, result);
 
     wire [31:0] sum;
 
-    One_bit_alu_slice aluslice0(.ctl(ctl), .ai(a[0]), .bi(b[0]), .invb(inv),.cin(0), .sum(sum[0]), .cout(cout));
+    One_bit_alu_slice aluslice0(.ctl(ctl), .ai(a[0]), .bi(b[0]), .invb(inv),.cin(cin), .sum(sum[0]), .cout(cout));
     One_bit_alu_slice aluslice1(.ctl(ctl), .ai(a[1]), .bi(b[1]), .invb(inv),.cin(cout), .sum(sum[1]), .cout(cout));
     One_bit_alu_slice aluslice2(.ctl(ctl), .ai(a[2]), .bi(b[2]), .invb(inv),.cin(cout), .sum(sum[2]), .cout(cout));
     One_bit_alu_slice aluslice3(.ctl(ctl), .ai(a[3]), .bi(b[3]), .invb(inv),.cin(cout), .sum(sum[3]), .cout(cout));
@@ -52,7 +53,7 @@ module Alu(ctl, a, b, result);
     One_bit_alu_slice aluslice28(.ctl(ctl), .ai(a[28]), .bi(b[28]), .invb(inv),.cin(cout), .sum(sum[28]), .cout(cout));
     One_bit_alu_slice aluslice29(.ctl(ctl), .ai(a[29]), .bi(b[29]), .invb(inv),.cin(cout), .sum(sum[29]), .cout(cout));
     One_bit_alu_slice aluslice30(.ctl(ctl), .ai(a[30]), .bi(b[30]), .invb(inv),.cin(cout), .sum(sum[30]), .cout(cout));
-    One_bit_alu_slice aluslice31(.ctl(ctl), .ai(a[31]), .bi(b[31]), .invb(inv),.cin(cout), .sum(sum[31]), .cout(cout));
+    One_bit_alu_slice aluslice31(.ctl(ctl), .ai(a[31]), .bi(b[31]), .invb(inv),.cin(cout), .sum(sum[31]), .cout(carry));
 
     assign result = (ctl == 42) ? {31'b0, sum[31]}: // slt
                                   sum;              // other
