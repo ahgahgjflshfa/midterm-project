@@ -8,6 +8,7 @@
 		1. result: 最後處理完的結果
 		2. zero:   branch指令所需要之輸出
 */
+`timescale 1ns/ 1ns
 module Alu(ctl, a, b, cin, carry, result);
     input cin;
     input [5:0] ctl;

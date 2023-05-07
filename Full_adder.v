@@ -1,3 +1,4 @@
+`timescale 1ns/ 1ns
 module Full_adder(a, b, cin, cout, sum);
 
     input a, b, cin;

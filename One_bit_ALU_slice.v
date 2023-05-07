@@ -10,7 +10,7 @@
         1. sum: 結果
         2. cout: carry out
 */
-
+`timescale 1ns/ 1ns
 module One_bit_alu_slice(ctl, ai, bi, invb, cin, sum, cout, set);
     input [5:0] ctl;
     input ai, bi, invb, cin;

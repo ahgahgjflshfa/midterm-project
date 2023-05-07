@@ -8,7 +8,7 @@
 	Output Port
 		1. d_out: 所讀取的暫存器資料
 */
-
+`timescale 1ns/ 1ns
 module Register_64bit(d_out, clk, rst, en_reg, d_in);
     input clk, rst, en_reg;
     input [63:0] d_in;

@@ -7,6 +7,7 @@
     Output port:
         1. result: 移位後資料
 */
+`timescale 1ns/ 1ns
 module Barrel_Shifter_32bit(a, shamt, result);
     input wire [31:0] a;
     input wire [4:0] shamt;
