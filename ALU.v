@@ -9,7 +9,7 @@
 		2. zero:   branch指令所需要之輸出
 */
 `timescale 1ns/ 1ns
-module Alu(ctl, a, b, cin, carry, result);
+module ALU(ctl, a, b, cin, carry, result);
     input cin;
     input [5:0] ctl;
     input [31:0] a, b;

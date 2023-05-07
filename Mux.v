@@ -1,5 +1,5 @@
 `timescale 1ns/ 1ns
-module Mux_4to1(ALUOut, HiOut, LoOut, Shifter, Signal, dataOut);
+module MUX(ALUOut, HiOut, LoOut, Shifter, Signal, dataOut);
     input [31:0] ALUOut ;
     input [31:0] HiOut ;
     input [31:0] LoOut ;
@@ -22,7 +22,7 @@ module Mux_4to1(ALUOut, HiOut, LoOut, Shifter, Signal, dataOut);
     parameter MFLO = 6'b010010;
     parameter MULTU = 6'd25;
 
-    assign temp = (Signal == AND) ? ALUOut:
+    assign dataOut = (Signal == AND) ? ALUOut:
                 (Signal == OR) ? ALUOut:
                 (Signal == ADD) ? ALUOut:
                 (Signal == SUB) ? ALUOut:

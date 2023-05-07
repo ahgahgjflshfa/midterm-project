@@ -2,13 +2,14 @@
     Title: 32 Bit Barrel Shifter
     Input port:
         1. a : 資料
-        2. bit : 移位量
+        2. shamt : 移位量
 
     Output port:
         1. result: 移位後資料
 */
 `timescale 1ns/ 1ns
-module Barrel_Shifter_32bit(a, shamt, result);
+module Shifter(Signal, a, shamt, result);
+    input [5:0] Signal;
     input wire [31:0] a;
     input wire [4:0] shamt;
     output [31:0] result;
