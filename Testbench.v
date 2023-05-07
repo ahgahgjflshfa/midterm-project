@@ -1,9 +1,9 @@
 `timescale 1ns/ 1ns
 module tb_ALU();
 	reg clk, rst;
-	reg[5:0] ctrl;
-	reg[31:0] inputA, inputB, ans;
-	wire[31:0] out;
+	reg [5:0] ctrl;
+	reg [31:0] inputA, inputB, ans;
+	wire [31:0] out;
 	integer fp_r, fp_r_ans, eof;
 	
 	// 產生時脈，週期：10ns
@@ -22,12 +22,12 @@ module tb_ALU();
 			每一行為一筆輸入
 			格式為：控制訊號  InputA  InputB
 		*/
-		fp_r = $fopen( "input.txt", "r" );
+		fp_r = $fopen( "./input.txt", "r" );
 		/*
 			讀取答案，檔名"ans.txt"可自行修改
 			每一行為一筆正確答案
 		*/
-		fp_r_ans = $fopen( "ans.txt", "r" );
+		fp_r_ans = $fopen( "./ans.txt", "r" );
 		/*
 			自此開始模擬ALU並比對輸出結果
 			如結果正確，將輸出："Correct"

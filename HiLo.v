@@ -1,7 +1,7 @@
 `timescale 1ns/1ns
 module HiLo(clk, MulAns, HiOut, LoOut, reset);
     input clk, reset;
-    input [63:0] MulAns;
+    input wire [63:0] MulAns;
     output [31:0] HiOut, LoOut;
 
     reg [63:0] HiLo;

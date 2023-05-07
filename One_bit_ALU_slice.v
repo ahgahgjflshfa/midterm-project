@@ -11,22 +11,22 @@
         2. cout: carry out
 */
 `timescale 1ns/ 1ns
-module One_bit_alu_slice(ctl, ai, bi, invb, cin, sum, cout, set);
+module One_bit_alu_slice(ctl, a, b, invb, cin, sum, cout, set);
     input [5:0] ctl;
-    input ai, bi, invb, cin;
+    input a, b, invb, cin;
     output sum, cout, set;
 
     wire temp0, temp1, temp2;
     // and
-    and(temp0, a, b);
+    and and1(temp0, a, b);
 
     // or
-    or(temp1, a, b);
+    or or1(temp1, a, b);
 
     // add
     wire e1;
     xor(e1, b, invb);
-    Full_adder fa(.a(ai), .b(e1), .cin(cin), .sum(temp2), .cout(cout));
+    Full_adder fa(.a(a), .b(e1), .cin(cin), .sum(temp2), .cout(cout));
 
     // assign set
     assign set = temp2;
@@ -39,5 +39,5 @@ module One_bit_alu_slice(ctl, ai, bi, invb, cin, sum, cout, set);
                                2'b10;   // sub and slt
 
     // select
-    Mux_4to1 mux41(.sel(sel), .in0(temp0), .in1(temp1), .in2(temp2), .out(sum));
+    Mux_4to1 mux41(.sel(sel), .in0(temp0), .in1(temp1), .in2(temp2), .in3(), .out(sum));
 endmodule
