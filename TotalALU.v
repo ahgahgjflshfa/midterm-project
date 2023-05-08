@@ -33,6 +33,7 @@ parameter MFLO = 6'b010010;
 定義各種訊號
 */
 //============================
+wire carry;
 wire [5:0]  SignaltoALU ;
 wire [5:0]  SignaltoSHT ;
 wire [5:0]  SignaltoMUL ;
@@ -46,7 +47,7 @@ wire [63:0] MULAns ;
 //============================
 
 ALUControl ALUControl( .clk(clk), .Signal(Signal), .SignaltoALU(SignaltoALU), .SignaltoSHT(SignaltoSHT), .SignaltoMUL(SignaltoMUL), .SignaltoMUX(SignaltoMUX) );
-ALU ALU( .a(dataA), .b(dataB), .ctl(SignaltoALU), .result(ALUOut));
+ALU ALU( .a(dataA), .b(dataB), .ctl(SignaltoALU), .result(ALUOut), .cin(0), .carry(carry));
 Multiplier Multiplier( .clk(clk), .dataA(dataA), .dataB(dataB), .Signal(SignaltoMUL), .dataOut(MULAns), .reset(reset) );
 Shifter Shifter( .a(dataA), .shamt(dataB), .Signal(SignaltoSHT), .result(ShifterOut));
 HiLo HiLo( .clk(clk), .MulAns(MulAns), .HiOut(HiOut), .LoOut(LoOut), .reset(reset));

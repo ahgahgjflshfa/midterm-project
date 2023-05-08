@@ -1,15 +1,22 @@
 `timescale 1ns/ 1ns
-module Full_adder(a, b, cin, cout, sum);
+module Full_adder(a, b, cin, carry, sum);
 
-    input a, b, cin;
-    output cout, sum;
+    input wire a, b, cin;
+    output wire carry, sum;
     
-    wire   e1, e2, e3;
+    wire s, c;
+    wire e1, e2, e3, e4;
 
+    // sum
     xor(e1, a, b);
-    and(e2, a, b);
-    and(e3, e1, cin);
-    or(cout, e2, e3);
-    xor(sum, e1, cin);
+    xor(s, e1, cin);
 
+    // carry
+    or(e2, a, b);
+    and(e3, e2, cin);
+    and(e4, a, b);
+    or(c, e3, e4);
+
+    assign sum = s;
+    assign carry = c;
 endmodule
