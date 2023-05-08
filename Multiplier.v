@@ -9,27 +9,27 @@ module Multiplier( clk, dataA, dataB, Signal, dataOut, reset );
 
     //   Signal ( 6-bits)?
     //   MULTU  : 25
+    wire carry;
     wire [31:0] hi, lo;
     reg [63:0] temp, multiplicand, multiplier;
     parameter MULTU= 6'd25;
     parameter OUT = 6'b111111;
 
     ALU alu0(.ctl(Signal), .a(lo), .b(multiplicand[31:0]), .cin(0), .carry(carry), .result(lo));
-    ALU alu1(.ctl(Signal), .a(hi), .b(multiplicand[31:0]), .cin(carry), .carry(), .result(hi));
+    ALU alu1(.ctl(Signal), .a(hi), .b(multiplicand[63:32]), .cin(carry), .carry(), .result(hi));
 
     always @( posedge clk or reset ) begin
         if ( reset ) begin
-                temp = 32'b0;
-                multiplicand = dataA;
-                multiplier = dataB;
+            temp = 64'b0;
+            multiplicand = 64'b0;
+            multiplier = 64'b0;
         end
         else begin
             case ( Signal )
                 MULTU: begin
-                    multiplicand = multiplicand << 1;
-                    multiplier = multiplier >> 1;
+                    
                 end
-                OUT: temp = {hi,lo};
+                OUT: temp <= {hi,lo};
             endcase
         end
     end
