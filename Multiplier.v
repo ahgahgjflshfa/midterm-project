@@ -32,8 +32,8 @@ module Multiplier(clk, reset, Signal, dataA, dataB, dataOut);
     always @ ( posedge clk or reset )begin
         if (reset) begin
             tempOut = 64'b0;
-            multiplicand = 64'b0;
-            multiplier = 32'b0;
+            multiplicand = 64'b0;   // 無窮
+            multiplier = 32'b0;     // 無窮
             en_reg = 1'b0;
         end
         else if ((Signal == MULTU) && (multiplicand == 64'b0) && (multiplier == 64'b0)) begin
