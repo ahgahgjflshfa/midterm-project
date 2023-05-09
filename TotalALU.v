@@ -50,7 +50,7 @@ module TotalALU( clk, dataA, dataB, Signal, Output, reset );
     ALU ALU( .a(dataA), .b(dataB), .ctl(SignaltoALU), .result(ALUOut), .cin(0), .carry(carry));
     Multiplier Multiplier( .clk(clk), .dataA(dataA), .dataB(dataB), .Signal(SignaltoMUL), .dataOut(MULAns), .reset(reset) );
     Shifter Shifter( .a(dataA), .shamt(dataB), .Signal(SignaltoSHT), .result(ShifterOut));
-    HiLo HiLo( .clk(clk), .MulAns(MulAns), .HiOut(HiOut), .LoOut(LoOut), .reset(reset));
+    HiLo HiLo( .clk(clk), .MulAns(MULAns), .HiOut(HiOut), .LoOut(LoOut), .reset(reset));
     MUX MUX( .ALUOut(ALUOut), .HiOut(HiOut), .LoOut(LoOut), .Shifter(ShifterOut), .Signal(SignaltoMUX), .dataOut(dataOut) );
     /*
     建立各種module
